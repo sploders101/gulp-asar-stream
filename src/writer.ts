@@ -43,7 +43,7 @@ export class GulpAsarWriter extends Transform {
 			|| chunk.isStream()
 			|| chunk.isDirectory()
 		) {
-			if((chunk as Vinyl).isBuffer()) {
+			if(this.warnBuffers && Buffer.isBuffer(chunk.contents)) {
 				console.warn(`${chunk.path}: File is a buffer. It is recommended to use streams to take advantage of flow control and keep memory usage down.`);
 			}
 			this.files.set(chunk.relative, chunk);

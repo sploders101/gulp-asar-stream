@@ -46,3 +46,60 @@ return gulp.src("**/*.ts")
 	.pipe(new GulpAsarWriter("app.asar", { warnBuffers: true }));
 	.pipe(gulp.dest("dist"));
 ```
+
+By default, gulp.src buffers files into memory before passing them along. To prevent this, you can pass an options argument, like so:
+```typescript
+return gulp.src("**/*.png", {
+	buffers: false,
+})
+	.pipe(new GulpAsarWriter("app.asar"))
+	.pipe(gulp.dest("dist"));
+```
+
+### Usage with multiple input streams
+
+This library is most useful when you can merge all of your compile streams into one place. An easy way to accomplish this is to use [merge2](https://www.npmjs.com/package/merge2). With merge2, you can create all your separate pipelines, running them in parallel, and funnel them all into `GulpAsarWriter`. This will allow you to merge all of your files into the archive without creating any intermediary folders at all.
+
+Here is a PoC example (untested) of how one-step bundling of an electron application could be done.
+
+```typescript
+import gulp from "gulp";
+import merge2 from "merge2";
+import typescript from "gulp-typescript";
+import { GulpAsarStream } from "gulp-asar-stream";
+import source from "vinyl-source-stream";
+import axios from "axios";
+import unzip from "gulp-unzip";
+import zip from "gulp-zip";
+
+gulp.task("default", () => {
+	return merge2(
+
+		// Application scripts
+		merge2(
+			// Assets
+			gulp.src([
+				"**/*.png",
+				"**/*.ico",
+				"**/*.svg",
+				"**/*.html",
+			], { buffers: false }),
+			// Code
+			gulp.src("**/*.ts")
+				.pipe(typescript())
+		)
+			// Send it all into the asar
+			.pipe(new GulpAsarWriter("resources/app.asar")),
+
+		// Download electron distributable and unzip it
+		(await axios("https://github.com/electron/electron/releases/download/v11.4.5/electron-v11.4.5-linux-x64.zip", { responseType: stream })).data
+			.pipe(source("electron-v11.4.5-linux-x64.zip"))
+			.pipe(unzip())
+
+	)
+		// Zip files back up for distribution
+		.pipe(zip("application.zip"))
+		// Save zip in dist folder
+		.pipe(gulp.dest("dist"));
+});
+```
