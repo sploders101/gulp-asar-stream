@@ -1,0 +1,3 @@
+export {
+	GulpAsarWriter,
+} from "./writer";
