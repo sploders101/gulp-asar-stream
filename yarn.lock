@@ -238,10 +238,10 @@ array-unique@^0.3.2:
   resolved "https://registry.yarnpkg.com/array-unique/-/array-unique-0.3.2.tgz#a894b75d4bc4f6cd679ef3244a9fd8f46ae2d428"
   integrity sha1-qJS3XUvE9s1nnvMkSp/Y9Gri1Cg=
 
-asar-flex@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/asar-flex/-/asar-flex-1.0.5.tgz#692c2fdfd839b591599e0f53c8e4699814207f19"
-  integrity sha512-3E1nXPjS98/qp8ccCN4nLvKDbfd+SrKt2o/X5wOEvI72187VOSA2eR1HnvI3hz5U0TnISW0fAz5pQW+TGzB8jg==
+asar-flex@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/asar-flex/-/asar-flex-1.0.6.tgz#48cafc02b8a04d0a4a05d78adb918060e7cc2fa0"
+  integrity sha512-00jU/kpFvm0tRIkkvsGUlwhM6rwRZ0q8aL6ti3HJNUuv4SXJ7bNhPH/dDXE+kB5vmB35FVHBbuMo0IqqhwWwuQ==
 
 assign-symbols@^1.0.0:
   version "1.0.0"

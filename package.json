@@ -1,6 +1,6 @@
 {
 	"name": "gulp-asar-stream",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Stream vinyl files into asar archives",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -21,7 +21,7 @@
 		"typescript": "^4.2.4"
 	},
 	"dependencies": {
-		"asar-flex": "^1.0.5",
+		"asar-flex": "^1.0.6",
 		"vinyl": "^2.2.1"
 	}
 }
