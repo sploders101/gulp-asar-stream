@@ -10,6 +10,7 @@ import {
 	S_IXGRP,
 	S_IXOTH,
 } from "constants";
+import path from "path";
 
 const ANYEXEC = S_IXUSR | S_IXGRP | S_IXOTH;
 
@@ -64,7 +65,7 @@ export class GulpAsarWriter extends Transform {
 				} else if(file.isBuffer() || file.isStream) {
 					const size = this.getFileSize(file);
 					writer.addFile({
-						path: file.relative,
+						path: file.relative.split(path.sep).join("/"),
 						size,
 						stream: file.contents,
 						attributes: {
@@ -76,7 +77,7 @@ export class GulpAsarWriter extends Transform {
 			this.push(new Vinyl({
 				cwd: base,
 				contents: writer.createAsarStream(),
-				path: `${base.replace(/\/$/, "")}/${this.filename.replace(/^\//, "")}`,
+				path: `${base.replace(/[\/\\]$/, "")}/${this.filename.replace(/^[\/\\]/, "")}`,
 			}));
 			this.push(null);
 			cb();
