@@ -61,7 +61,7 @@ export class GulpAsarWriter extends Transform {
 			for(const file of this.files.values()) {
 				if(!base) base = file.base;
 				if(file.isDirectory()) {
-					writer.mkdir(file.relative);
+					writer.mkdir(file.relative.split(path.sep).join("/"));
 				} else if(file.isBuffer() || file.isStream) {
 					const size = this.getFileSize(file);
 					writer.addFile({
